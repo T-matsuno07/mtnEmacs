@@ -72,7 +72,7 @@
 (global-set-key "\C-n" 'split-window-horizontally)
 (global-set-key "\C-o" 'find-file)
 (global-set-key "\C-r" 'query-replace)
-(global-set-key "\C-c\C-c" 'copy-region-as-kill)
+
 (global-set-key "\C-v" 'yank)
 (global-set-key "\C-w" 'delete-window)
 (global-set-key "\C-x\C-x" 'kill-region)
@@ -83,7 +83,7 @@
 (global-set-key [?\C-x select] 'end-of-buffer)
 (global-set-key "\C-xj" 'goto-line)
 (global-set-key "\C-xn" 'linum-mode)
-
+(global-set-key "\C-]" 'shell)
 
 ;; call "other-window"  Ctrl-X O
 (global-set-key [f1] 'other-window)
@@ -111,6 +111,8 @@
 (global-set-key [f12] 'find-tag-other-window)
 
 (global-set-key "\C-q" nil)
+(global-set-key "\C-q\C-c" 'copy-region-as-kill)
+(global-set-key "\C-qc" 'copy-region-as-kill)
 (global-set-key "\C-q\C-q" 'other-window)
 (global-set-key "\C-qq" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
