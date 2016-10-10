@@ -65,14 +65,8 @@
 
 ;;; ショートカットWindows化
 (global-set-key "\C-a" 'mark-whole-buffer)
-(global-set-key "\C-b" 'isearch-backward)
-(global-set-key "\C-e" 'other-window)
-(global-set-key "\C-f" 'isearch-forward)
-(global-set-key "\C-l" 'buffer-menu)
-(global-set-key "\C-n" 'split-window-horizontally)
-(global-set-key "\C-o" 'find-file)
-(global-set-key "\C-r" 'query-replace)
-
+(global-set-key "\C-b" 'buffer-menu)
+(global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
 (global-set-key "\C-w" 'delete-window)
 (global-set-key "\C-x\C-x" 'kill-region)
@@ -116,6 +110,7 @@
 (global-set-key "\C-q\C-q" 'other-window)
 (global-set-key "\C-qq" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
+(global-set-key "\C-qr" 'query-replace)
 (global-set-key "\C-qt" 'find-tag)
 (global-set-key "\C-qb" 'pop-tag-mark)
 (global-set-key "\C-qg" 'grep)
