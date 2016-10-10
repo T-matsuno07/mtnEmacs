@@ -188,3 +188,5 @@
 (setq auto-install-directory "~/.emacs.d/auto-install")
 (setq auto-install-update-emacswiki-package-name t)
 (auto-install-compatibility-setup)
+
+(require 'anything-config)
