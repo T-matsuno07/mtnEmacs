@@ -64,7 +64,6 @@
 (setq gud-tooltip-echo-area nil)
 
 ;;; ショートカットWindows化
-(global-set-key "\C-a" 'mark-whole-buffer)
 (global-set-key "\C-b" 'buffer-menu)
 (global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
@@ -105,6 +104,7 @@
 (global-set-key [f12] 'find-tag-other-window)
 
 (global-set-key "\C-q" nil)
+(global-set-key "\C-qa" 'mark-whole-buffer)
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
 (global-set-key "\C-q\C-q" 'other-window)
@@ -114,6 +114,8 @@
 (global-set-key "\C-qt" 'find-tag)
 (global-set-key "\C-qb" 'pop-tag-mark)
 (global-set-key "\C-qg" 'grep)
+(global-set-key "\C-qi" 'open-config-file)
+(global-set-key "\C-qh" 'open-myhelp-file)
 ;(global-set-key (kbd "C-q" "C-t") '(lambda () (interactive) (other-window -1))
 
 
@@ -139,3 +141,15 @@
  (add-hook 'emacs-lisp-mode-hook 'my-rainbow-delimiters-mode-turn-on)
  (add-hook 'c-mode-common-hook 'my-rainbow-delimiters-mode-turn-on)
 
+;; emacsのコンフィグファイルを開く
+(defun open-config-file()
+  (interactive)
+  (find-file "~/.emacs.d/init.el")
+)
+
+
+;; 自作したヘルプファイルを開く
+(defun open-myhelp-file()
+  (interactive)
+  (find-file "~/.emacs.d/myhelp.txt")
+)
