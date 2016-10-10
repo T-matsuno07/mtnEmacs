@@ -33,6 +33,10 @@
 (prefer-coding-system 'utf-8)
 
 
+(setq-default c-basic-offset 2     ;;基本インデント量4
+   tab-width 2          ;;タブ幅4
+   indent-tabs-mode nil)  ;;インデントをタブでするかスペースでするか
+
 ;; 改行時に字下げ
 (add-hook 'c-mode-common-hook
          '(lambda ()
@@ -93,10 +97,10 @@
 (global-set-key "\C-b" 'buffer-menu)
 (global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
+(global-set-key (kbd "C-S-v") 'yel-yank)
 (global-set-key "\C-w" 'delete-window)
 (global-set-key "\C-x\C-x" 'kill-region)
 (global-set-key "\C-z" 'undo)
-(global-set-key "\C-y" 'yel-yank)
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [select] 'end-of-line)
 (global-set-key [?\C-x home] 'beginning-of-buffer)
@@ -189,4 +193,25 @@
 (setq auto-install-update-emacswiki-package-name t)
 (auto-install-compatibility-setup)
 
+
+
+;; anything 
+(require 'anything)
 (require 'anything-config)
+(add-to-list 'anything-sources 'anything-c-source-emacs-commands)
+(global-set-key "\C-ql" 'anything)
+(global-set-key "\C-q\C-l" 'anything-for-files)
+
+;; kill-ring borwser
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+(global-set-key (kbd "C-y") 'browse-kill-ring)
+
+
+;; 履歴保存
+(require 'stash)
+
+;; 永続化したい変数を宣言する
+;;; (or stashed 'nil)は読み込み時にデフォルトでnilにするおまじない
+(defstash kill-ring "kill-ring.el" nil (or stashed 'nil))
+(defstash minibuffer-history "minibuffer-history.el" nil (or stashed 'nil))
