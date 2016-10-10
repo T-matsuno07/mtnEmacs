@@ -1,4 +1,18 @@
-((("iCom" .
+((("redo" .
+   [0 0 0 1])
+  ("next-history" .
+   [0 0 0 0 0 0 0 1 0 0 0 0])
+  ("previous-history" .
+   [0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0])
+  ("shell-mode-map" .
+   [1 0 0 0 0 0 0 1 0 0 1 1 0 0])
+  ("comint-next-input" .
+   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0])
+  ("comint-previous-input" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1])
+  ("describe-bindings" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("iCom" .
    [0 0 1 0])
   ("printf" .
    [1 0 0 1 0 0])
@@ -47,4 +61,40 @@
   ("ans" .
    [1 0 0])
   ("open-myhelp-file" .
-   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0])))
+   [0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0])
+  ("execute-extended-command" .
+   [1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("define-key" .
+   [0 0 0 0 0 0 0 0 0 2])
+  ("shell-mode" .
+   [0 0 0 1 0 0 0 0 0 0])
+  ("next" .
+   [1 0 0 0])
+  ("add-hook" .
+   [0 0 0 0 0 0 1 0])
+  ("shell-mode-hook" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 1 0])
+  ("lambda" .
+   [0 0 0 1 0 0])
+  ("shell-match-partial-variable" .
+   [0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("kbd" .
+   [1 0 0])
+  ("comint" .
+   [0 0 0 0 0 1])
+  ("line-number-mode" .
+   [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1])
+  ("column-number-mode" .
+   [0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("savehist-mode" .
+   [0 0 0 0 0 0 1 0 0 0 0 0 0])
+  ("setq" .
+   [2 0 0 1])
+  ("echo-keystrokes" .
+   [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0])
+  ("yel-yank" .
+   [0 0 0 1 0 0 0 0])
+  ("auto" .
+   [1 0 0 0])
+  ("set" .
+   [1 0 0])))

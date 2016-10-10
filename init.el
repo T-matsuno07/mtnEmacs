@@ -41,6 +41,10 @@
 ))
 
 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install"))
+
+
 (defun yel-yank () 
 "yank to cycle kill ring" (interactive "*") 
 (if (or (eq last-command 'yank-pop) (eq last-command 'yank)) 
@@ -48,6 +52,28 @@
 (yank 1))) 
 
 
+
+; メニューバーを消す
+(menu-bar-mode 0)
+
+;;; リージョンを削除できるように
+(delete-selection-mode t)
+
+;; 行番号を左側に表示
+(global-linum-mode t)
+
+;;; 行番号と桁番号を表示する
+(line-number-mode t)
+(column-number-mode t)
+
+;; 履歴を次回emacsにも表示する
+(savehist-mode t)
+
+;; キーストロークをエコーエリアにすぐに表示する
+(setq echo-keystrokes 0.1)
+
+;; yesと入力するのは面倒なのでyで十分
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 
 ;;; GDB 関連
@@ -70,22 +96,15 @@
 (global-set-key "\C-w" 'delete-window)
 (global-set-key "\C-x\C-x" 'kill-region)
 (global-set-key "\C-z" 'undo)
+(global-set-key "\C-y" 'yel-yank)
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [select] 'end-of-line)
 (global-set-key [?\C-x home] 'beginning-of-buffer)
 (global-set-key [?\C-x select] 'end-of-buffer)
 (global-set-key "\C-xj" 'goto-line)
 (global-set-key "\C-xn" 'linum-mode)
-(global-set-key "\C-]" 'shell)
+(global-set-key "\C-]" 'execute-extended-command)
 
-;; call "other-window"  Ctrl-X O
-(global-set-key [f1] 'other-window)
-;; call split window 2
-(global-set-key [f2] 'split-window-vertically)
-;; call split window 3
-(global-set-key [f3] 'split-window-horizontally)
-;; call "buffer-menu"
-(global-set-key [f4] 'buffer-menu)
 ;; GDB, one line do. not call function
 (global-set-key [f5] 'gud-next)
 ;; GDB, one line do. jump into function
@@ -100,7 +119,7 @@
 (global-set-key [f10] 'gdb)
 ;; call "compile"
 (global-set-key [f11] 'pop-tag-mark)
-;; call "Undo" Ctrl-X U
+;; call "Undo" Ctrl-X Uo
 (global-set-key [f12] 'find-tag-other-window)
 
 (global-set-key "\C-q" nil)
@@ -116,6 +135,7 @@
 (global-set-key "\C-qg" 'grep)
 (global-set-key "\C-qi" 'open-config-file)
 (global-set-key "\C-qh" 'open-myhelp-file)
+(global-set-key "\C-qd" 'describe-bindings)
 ;(global-set-key (kbd "C-q" "C-t") '(lambda () (interactive) (other-window -1))
 
 
@@ -153,3 +173,18 @@
   (interactive)
   (find-file "~/.emacs.d/myhelp.txt")
 )
+
+;; shell-mode キーバインド
+;; Ctrl + [n,p]でコマンド履歴を遡る戻る
+(add-hook 'shell-mode-hook
+  (lambda()
+    (define-key shell-mode-map (kbd  "C-p") 'comint-previous-input)
+    (define-key shell-mode-map (kbd  "C-n") 'comint-next-input)
+  )
+)
+
+;; auto-install
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/auto-install")
+(setq auto-install-update-emacswiki-package-name t)
+(auto-install-compatibility-setup)
