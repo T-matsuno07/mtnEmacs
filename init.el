@@ -18,6 +18,12 @@
  '(rainbow-delimiters-depth-7-face ((((class color) (background light)) (:foreground "#FFF1F0"))))
  '(rainbow-delimiters-depth-8-face ((((class color) (background light)) (:foreground "#E5004F"))))
  '(rainbow-delimiters-depth-9-face ((((class color) (background light)) (:foreground "#E4007F")))))
+
+; elファイルを読み込むパスを通す
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install"))
+
+
 ; dont make auto save file FILENAME~
 (setq make-backup-files nil)
 
@@ -44,9 +50,11 @@
             (define-key c-mode-base-map "\C-m" 'newline-and-indent)
 ))
 
-
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install"))
+;; Ctrl + a 連打で行頭とインデント先頭を往復
+(defun my-move-begin-of-line() 
+  (interactive)
+  (if (bolp) (back-to-indentation) (beginning-of-line) )
+)
 
 
 (defun yel-yank () 
@@ -54,6 +62,36 @@
 (if (or (eq last-command 'yank-pop) (eq last-command 'yank)) 
 (yank-pop 1) 
 (yank 1))) 
+
+
+(defun window-resizer ()
+  "Control window size and position."
+  (interactive)
+  (let ((window-obj (selected-window))
+        (current-width (window-width))
+        (current-height (window-height))
+        (dx (if (= (nth 0 (window-edges)) 0) 1
+              -1))
+        (dy (if (= (nth 1 (window-edges)) 0) 1
+              -1))
+        c)
+    (catch 'end-flag
+      (while t
+        (message "size[%dx%d]"
+                 (window-width) (window-height))
+        (setq c (read-char))
+        (cond ((= c ?l)
+               (enlarge-window-horizontally dx))
+              ((= c ?j)
+               (shrink-window-horizontally dx))
+              ((= c ?k)
+               (enlarge-window dy))
+              ((= c ?i)
+               (shrink-window dy))
+              ;; otherwise
+              (t
+               (message "Quit")
+               (throw 'end-flag t)))))))
 
 
 
@@ -94,6 +132,7 @@
 (setq gud-tooltip-echo-area nil)
 
 ;;; ショートカットWindows化
+(global-set-key "\C-a" 'my-move-begin-of-line)
 (global-set-key "\C-b" 'buffer-menu)
 (global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
@@ -127,10 +166,10 @@
 (global-set-key [f12] 'find-tag-other-window)
 
 (global-set-key "\C-q" nil)
+(global-set-key "\C-q\C-q" 'view-mode)
 (global-set-key "\C-qa" 'mark-whole-buffer)
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
-(global-set-key "\C-q\C-q" 'other-window)
 (global-set-key "\C-qq" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
 (global-set-key "\C-qr" 'query-replace)
@@ -140,6 +179,7 @@
 (global-set-key "\C-qi" 'open-config-file)
 (global-set-key "\C-qh" 'open-myhelp-file)
 (global-set-key "\C-qd" 'describe-bindings)
+(global-set-key "\C-qs" 'window-resizer)
 ;(global-set-key (kbd "C-q" "C-t") '(lambda () (interactive) (other-window -1))
 
 
@@ -205,8 +245,9 @@
 ;; kill-ring borwser
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
-(global-set-key (kbd "C-y") 'browse-kill-ring)
 
+;(global-set-key (kbd "C-y") 'browse-kill-ring)
+(global-set-key (kbd "C-y") 'anything-show-kill-ring)
 
 ;; 履歴保存
 (require 'stash)
@@ -215,3 +256,28 @@
 ;;; (or stashed 'nil)は読み込み時にデフォルトでnilにするおまじない
 (defstash kill-ring "kill-ring.el" nil (or stashed 'nil))
 (defstash minibuffer-history "minibuffer-history.el" nil (or stashed 'nil))
+
+
+;; gdb モードでのキーバインド 過去のコマンドを呼び出す
+(add-hook 'gdb-mode-hook
+          '(lambda() 
+             (local-set-key "\C-p" 'comint-previous-input)
+             (local-set-key "\C-n" 'comint-next-input)
+           )
+)
+
+; view-mode 関連の設定
+(add-hook 'find-file-hook
+          '(lambda ()
+             (interactive)
+             (view-mode)
+           )
+)
+(require 'viewer)
+(setq viewer-modeline-color-unwritable "tomato")
+(setq viewer-modeline-color-view "orange")
+(viewer-change-modeline-color-setup)
+; view-mode におけるキーバインド
+(define-key view-mode-map (kbd "<DEL>") 'nil)
+(define-key view-mode-map (kbd "<RET>") 'nil)
+
