@@ -9,7 +9,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(rainbow-delimiters-depth-1-face ((((class color) (background light)) (:foreground "#FFFFFF"))))
+ '(rainbow-delimiters-depth-1-face ((((class color) (background light)) (:foreground "#7F7F7F"))))
  '(rainbow-delimiters-depth-2-face ((((class color) (background light)) (:foreground "#009944"))))
  '(rainbow-delimiters-depth-3-face ((((class color) (background light)) (:foreground "#1D2088"))))
  '(rainbow-delimiters-depth-4-face ((((class color) (background light)) (:foreground "#F39800"))))
@@ -22,7 +22,6 @@
 ; elファイルを読み込むパスを通す
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install"))
-
 
 ; dont make auto save file FILENAME~
 (setq make-backup-files nil)
@@ -280,4 +279,17 @@
 ; view-mode におけるキーバインド
 (define-key view-mode-map (kbd "<DEL>") 'nil)
 (define-key view-mode-map (kbd "<RET>") 'nil)
+
+
+
+;; dired-find-alternate-file の有効化
+(put 'dired-find-alternate-file 'disabled nil)
+;; RET 標準の dired-find-file では dired バッファが複数作られるので
+;; dired-find-alternate-file を代わりに使う
+(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
+(define-key dired-mode-map (kbd "a") 'dired-find-file)
+
+;; ディレクトリの移動キーを追加(wdired 中は無効)
+(define-key dired-mode-map (kbd "<left>") 'dired-up-directory)
+(define-key dired-mode-map (kbd "<right>") 'dired-open-in-accordance-with-situation)
 

@@ -1,0 +1,12 @@
+((("include" .
+   [1 0 0 0 0 0 0])
+  ("set-background-color" .
+   [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("default" .
+   [0 0 0 0 0 0 1])
+  ("set-face-background" .
+   [0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0])
+  ("custom-set-faces" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0])
+  ("set-face-foreground" .
+   [0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0])))
