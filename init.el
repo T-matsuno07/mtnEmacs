@@ -120,7 +120,7 @@
 
 ;;; GDB 関連
 ;;; 有用なバッファを開くモード
-(setq gdb-many-windows t)
+(setq gdb-many-windows nil)
 
 ;;; 変数の上にマウスカーソルを置くと値を表示
 (add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
@@ -150,8 +150,10 @@
 
 ;; GDB, one line do. not call function
 (global-set-key [f5] 'gud-next)
+(global-set-key [?\C-x f5] 'gud-jump)
 ;; GDB, one line do. jump into function
 (global-set-key [f6] 'gud-step)
+(global-set-key [?\C-x f6] 'gud-jump)
 ;; GDB, do until end of current function
 (global-set-key [f7] 'gud-finish)
 ;; Paste history
