@@ -116,6 +116,17 @@
 ;; yesと入力するのは面倒なのでyで十分
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; find-grep デフォルト入力指定
+(custom-set-variables
+ '(grep-find-command "find . -type f ! -wholename '*/.svn/*' ! -wholename '*/.git/*' -name '*.[ch]' | xargs grep  -nH ''")
+;'(grep-find-command "find . -type f -name '*.[ch]' | xargs grep -nH ''") 
+)
+
+;;; スクロールを一行ずつにする
+(setq scroll-step 1)
+
+;;; スクロールバーを右側に表示する
+(set-scroll-bar-mode 'right)
 
 ;;; GDB 関連
 ;;; 有用なバッファを開くモード
@@ -147,24 +158,27 @@
 (global-set-key "\C-xn" 'linum-mode)
 (global-set-key "\C-]" 'execute-extended-command)
 
-;; GDB, one line do. not call function
-(global-set-key [f5] 'gud-next)
-(global-set-key [?\C-x f5] 'gud-jump)
-;; GDB, one line do. jump into function
-(global-set-key [f6] 'gud-step)
-(global-set-key [?\C-x f6] 'gud-jump)
-;; GDB, do until end of current function
-(global-set-key [f7] 'gud-finish)
-;; Paste history
-(global-set-key [f8] 'yel-yank)
-;; Start shell  Alt-X shell
-(global-set-key [f9] 'shell)
+(global-set-key [f2] 'pop-tag-mark)
+(global-set-key [f3] 'find-tag)
+(global-set-key [f4] 'find-tag-other-window)
+
 ;; call "GDB"
-(global-set-key [f10] 'gdb)
+(global-set-key [f5] 'gdb)
 ;; call "compile"
-(global-set-key [f11] 'pop-tag-mark)
-;; call "Undo" Ctrl-X Uo
-(global-set-key [f12] 'find-tag-other-window)
+(global-set-key [f6] 'compile)
+;; grep
+(global-set-key [f8] 'grep-find)
+;; GDB, go to selected line
+(global-set-key [f9] 'gud-jump)
+;; GDB, one line do. not call function
+(global-set-key [f10] 'gud-next)
+;; GDB, one line do. jump into function
+(global-set-key [f11] 'gud-step)
+;; GDB, do until end of current function
+(global-set-key [?\C-x f11] 'gud-finish)
+;; Paste history
+(global-set-key [f12] 'yel-yank)
+
 
 (global-set-key "\C-q" nil)
 (global-set-key "\C-q\C-q" 'view-mode)
@@ -172,6 +186,7 @@
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
 (global-set-key "\C-qq" (lambda () (interactive) (other-window -1)))
+(global-set-key "\C-qo" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
 (global-set-key "\C-qr" 'query-replace)
 (global-set-key "\C-qt" 'find-tag)
@@ -181,6 +196,7 @@
 (global-set-key "\C-qh" 'open-myhelp-file)
 (global-set-key "\C-qd" 'describe-bindings)
 (global-set-key "\C-qs" 'window-resizer)
+(global-set-key "\C-qe" 'toggle-truncate-lines)
 ;(global-set-key (kbd "C-q" "C-t") '(lambda () (interactive) (other-window -1))
 
 
