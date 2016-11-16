@@ -29,6 +29,9 @@
 ; dont make auto save file #FILENAME#
 (setq auto-save-default nil)
 
+
+
+
 ; pare () stress
 (show-paren-mode t)
 
@@ -118,9 +121,20 @@
 
 ;; find-grep デフォルト入力指定
 (custom-set-variables
- '(grep-find-command "find . -type f ! -wholename '*/.svn/*' ! -wholename '*/.git/*' -name '*.[ch]' | xargs grep  -nH ''")
-;'(grep-find-command "find . -type f -name '*.[ch]' | xargs grep -nH ''") 
+  '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '*.[ch]' | xargs grep  -nH ''" default-directory) )
+;  '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' '*.[ch]' | xargs grep  -nH ''" default-directory) )
 )
+
+
+(defun create-ctags ()
+  (interactive)
+   (setq tmp (shell-command-to-string "pwd") )
+   (setq pat (read-string "ctags taget : " tmp ))
+   (setq tcmd (read-string "make ctags : " (format "ctags -Re --languages=c,c++ %s" pat)))
+   (shell-command  (format "%s && echo make TAGS successfull " tcmd))
+   (shell-command  (format "cp TAGS %s/TAGS 2> /dev/null" pat))
+)
+
 
 ;;; スクロールを一行ずつにする
 (setq scroll-step 1)
@@ -160,6 +174,7 @@
 
 (global-set-key [f2] 'pop-tag-mark)
 (global-set-key [f3] 'find-tag)
+(global-set-key [?\C-x f3] 'create-ctags)
 (global-set-key [f4] 'find-tag-other-window)
 
 ;; call "GDB"
