@@ -121,14 +121,14 @@
 
 ;; find-grep デフォルト入力指定
 (custom-set-variables
-  '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '*.[ch]' | xargs grep  -nH ''" default-directory) )
-;  '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' '*.[ch]' | xargs grep  -nH ''" default-directory) )
+  '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '*.[ch]' | xargs grep  -nH ''" (substring (shell-command-to-string "pwd") 0 -1 )) )
+; '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' -name '*.[ch]' | xargs grep  -nH ''" (substring (shell-command-to-string "pwd") 0 -1 )) )
 )
 
 
 (defun create-ctags ()
   (interactive)
-   (setq tmp (shell-command-to-string "pwd") )
+   (setq tmp (substring (shell-command-to-string "pwd") 0 -1) )
    (setq pat (read-string "ctags taget : " tmp ))
    (setq tcmd (read-string "make ctags : " (format "ctags -Re --languages=c,c++ %s" pat)))
    (shell-command  (format "%s && echo make TAGS successfull " tcmd))
