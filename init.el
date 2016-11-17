@@ -29,9 +29,6 @@
 ; dont make auto save file #FILENAME#
 (setq auto-save-default nil)
 
-
-
-
 ; pare () stress
 (show-paren-mode t)
 
@@ -119,12 +116,16 @@
 ;; yesと入力するのは面倒なのでyで十分
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; find-grep デフォルト入力指定
-(custom-set-variables
-  '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '*.[ch]' | xargs grep  -nH ''" (substring (shell-command-to-string "pwd") 0 -1 )) )
-; '(grep-find-command (format "find %s -type f ! -wholename '*.svn*' -name '*.[ch]' | xargs grep  -nH ''" (substring (shell-command-to-string "pwd") 0 -1 )) )
+; find-grep デフォルト入力指定
+(defun my-grep-find ()
+  (interactive)
+   (setq tmp (substring (shell-command-to-string "pwd") 0 -1) )
+   (setq tDIR (read-string "find-grep target Directory: " tmp ))
+   (setq tSTR (read-string "find-grep target String   : "  ))
+   (setq tcmd (read-string "f.g. : " (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '*.[ch]' | xargs grep  -nH '%s'" tDIR tSTR)))
+;   (setq tcmd (read-string "f.g. : " (format "find %s -type f ! -wholename '*.svn*' -name '*.[ch]' | xargs grep  -nH '%s'" tDIR tSTR)))
+   (grep-find (format "%s" tcmd))
 )
-
 
 (defun create-ctags ()
   (interactive)
@@ -155,6 +156,11 @@
 ;;; t にすると mini buffer に値が表示される
 (setq gud-tooltip-echo-area nil)
 
+;;; undo-tree
+(require 'undo-tree)
+(global-undo-tree-mode t)
+
+
 ;;; ショートカットWindows化
 (global-set-key "\C-a" 'my-move-begin-of-line)
 (global-set-key "\C-b" 'buffer-menu)
@@ -173,6 +179,7 @@
 (global-set-key "\C-]" 'execute-extended-command)
 
 (global-set-key [f2] 'pop-tag-mark)
+(global-set-key [?\C-x f2] 'visit-tags-table)
 (global-set-key [f3] 'find-tag)
 (global-set-key [?\C-x f3] 'create-ctags)
 (global-set-key [f4] 'find-tag-other-window)
@@ -181,8 +188,10 @@
 (global-set-key [f5] 'gdb)
 ;; call "compile"
 (global-set-key [f6] 'compile)
+;; occur make list str
+(global-set-key [f7] 'occur)
 ;; grep
-(global-set-key [f8] 'grep-find)
+(global-set-key [f8] 'my-grep-find)
 ;; GDB, go to selected line
 (global-set-key [f9] 'gud-jump)
 ;; GDB, one line do. not call function
@@ -192,7 +201,7 @@
 ;; GDB, do until end of current function
 (global-set-key [?\C-x f11] 'gud-finish)
 ;; Paste history
-(global-set-key [f12] 'yel-yank)
+(global-set-key [f12] 'undo-tree-visualize)
 
 
 (global-set-key "\C-q" nil)
@@ -315,6 +324,12 @@
 
 
 
+;; ファイルなら別バッファで、ディレクトリなら同じバッファで開く
+(defun dired-open-file-not ()
+  (interactive)
+  (let ((file (dired-get-filename)))
+    (if (file-directory-p file) (dired-find-file) (message "File Selected") )))
+
 ;; dired-find-alternate-file の有効化
 (put 'dired-find-alternate-file 'disabled nil)
 ;; RET 標準の dired-find-file では dired バッファが複数作られるので
@@ -324,5 +339,6 @@
 
 ;; ディレクトリの移動キーを追加(wdired 中は無効)
 (define-key dired-mode-map (kbd "<left>") 'dired-up-directory)
-(define-key dired-mode-map (kbd "<right>") 'dired-open-in-accordance-with-situation)
+;(define-key dired-mode-map (kbd "<right>") 'dired-find-alternate-file)
+(define-key dired-mode-map (kbd "<right>") 'dired-open-file-not)
 
