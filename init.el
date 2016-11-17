@@ -37,6 +37,8 @@
 ; 極力UTF-8とする
 (prefer-coding-system 'utf-8)
 
+; diredモードでディレクトリを先に表示
+(setq dired-listing-switches "-alL --group-directories-first")
 
 (setq-default c-basic-offset 2     ;;基本インデント量4
    tab-width 2          ;;タブ幅4
