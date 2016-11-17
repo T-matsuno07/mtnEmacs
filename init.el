@@ -9,15 +9,18 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(rainbow-delimiters-depth-1-face ((((class color) (background light)) (:foreground "#7F7F7F"))))
- '(rainbow-delimiters-depth-2-face ((((class color) (background light)) (:foreground "#009944"))))
- '(rainbow-delimiters-depth-3-face ((((class color) (background light)) (:foreground "#1D2088"))))
- '(rainbow-delimiters-depth-4-face ((((class color) (background light)) (:foreground "#F39800"))))
- '(rainbow-delimiters-depth-5-face ((((class color) (background light)) (:foreground "#009e96"))))
- '(rainbow-delimiters-depth-6-face ((((class color) (background light)) (:foreground "#920783"))))
- '(rainbow-delimiters-depth-7-face ((((class color) (background light)) (:foreground "#FFF1F0"))))
- '(rainbow-delimiters-depth-8-face ((((class color) (background light)) (:foreground "#E5004F"))))
- '(rainbow-delimiters-depth-9-face ((((class color) (background light)) (:foreground "#E4007F")))))
+ '(rainbow-delimiters-depth-1-face ((((class color) (background light)) (:foreground "#cdcd00")))) ; yellow
+ '(rainbow-delimiters-depth-2-face ((((class color) (background light)) (:foreground "#00cd00")))) ; green
+ '(rainbow-delimiters-depth-3-face ((((class color) (background light)) (:foreground "#0000ee")))) ; blue
+ '(rainbow-delimiters-depth-4-face ((((class color) (background light)) (:foreground "#cd00cd")))) ; magenta
+ '(rainbow-delimiters-depth-5-face ((((class color) (background light)) (:foreground "#00cdcd")))) ; cyan
+ '(rainbow-delimiters-depth-6-face ((((class color) (background light)) (:foreground "#cdcd00")))) ; yellow
+ '(rainbow-delimiters-depth-7-face ((((class color) (background light)) (:foreground "#00cd00")))) ; green
+ '(rainbow-delimiters-depth-8-face ((((class color) (background light)) (:foreground "#0000ee")))) ; blue
+ '(rainbow-delimiters-depth-9-face ((((class color) (background light)) (:foreground "#cd00cd")))) ; magenta
+ '(rainbow-delimiters-depth-10-face ((((class color) (background light)) (:foreground "#00cdcd")))) ; cyan
+
+)
 
 ; elファイルを読み込むパスを通す
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -270,11 +273,6 @@
   )
 )
 
-;; auto-install
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/auto-install")
-(setq auto-install-update-emacswiki-package-name t)
-(auto-install-compatibility-setup)
 
 
 
@@ -317,13 +315,14 @@
            )
 )
 (require 'viewer)
-(setq viewer-modeline-color-unwritable "tomato")
-(setq viewer-modeline-color-view "orange")
+(setq viewer-modeline-color-unwritable "#cd0000")
+(setq viewer-modeline-color-view "#cdcd00")
 (viewer-change-modeline-color-setup)
 ; view-mode におけるキーバインド
 (define-key view-mode-map (kbd "<DEL>") 'nil)
 (define-key view-mode-map (kbd "<RET>") 'nil)
-
+(define-key view-mode-map (kbd "<SPC>") 'nil)
+(define-key view-mode-map (kbd "q") 'view-mode)
 
 
 ;; ファイルなら別バッファで、ディレクトリなら同じバッファで開く
@@ -344,3 +343,28 @@
 ;(define-key dired-mode-map (kbd "<right>") 'dired-find-alternate-file)
 (define-key dired-mode-map (kbd "<right>") 'dired-open-file-not)
 
+
+
+;; auto-install [begin]
+(require 'auto-install)
+(setq auto-install-directory "~/.emacs.d/auto-install")
+(setq auto-install-update-emacswiki-package-name t)
+(auto-install-compatibility-setup)
+;; auto-install [end]
+
+;; atuto-compete-clang [begin]
+(require 'auto-complete-clang-async)
+
+(defun ac-cc-mode-setup ()
+  (setq ac-clang-complete-executable "~/.emacs.d/clang-complete")
+  (setq ac-sources '(ac-source-clang-async))
+  (ac-clang-launch-completion-process)
+)
+
+(defun my-ac-config ()
+  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+
+(my-ac-config)
+;; atuto-compete-clang [end]
