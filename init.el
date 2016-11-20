@@ -40,6 +40,7 @@
 ; 極力UTF-8とする
 (prefer-coding-system 'utf-8)
 
+
 ; diredモードでディレクトリを先に表示
 (setq dired-listing-switches "-alL --group-directories-first")
 
@@ -141,6 +142,46 @@
    (shell-command  (format "cp TAGS %s/TAGS 2> /dev/null" pat))
 )
 
+; clangにヘッダーパスを通すコマンドを呼ぶ
+; カレントディレクトリに makefile or Makefile が存在するかによってデフォルト値を変える
+(defun mtn-set-clang-include-path-main()
+  (interactive)
+  (if (file-exists-p "./makefile") (mtn-set-clang-include-path-makefile)   ; makefileの存在で分岐
+   (progn (if (file-exists-p "./Makefile") (mtn-set-clang-include-path-makefile) (mtn-set-clang-include-path-pwd)))   ; Makefileの存在で分岐
+  )
+)
+
+(defun mtn-set-clang-include-path-makefile()
+  (interactive)
+  (setq ac-clang-cflags
+        (split-string
+         (shell-command-to-string
+          (read-shell-command "clang include path : " "make inc" nil
+                              (and buffer-file-name
+                                   (file-relative-name buffer-file-name))))))
+  (ac-clang-update-cmdlineargs)
+)
+
+(defun mtn-set-clang-include-path-pwd()
+  (interactive)
+  (setq tmp (substring (shell-command-to-string "pwd") 0 -1) )
+  (setq ac-clang-cflags
+        (split-string
+         (shell-command-to-string
+          (read-shell-command "set ac-clang option : " (format "-I%s" tmp) nil
+                              (and buffer-file-name
+                                   (file-relative-name buffer-file-name))))))
+  (ac-clang-update-cmdlineargs)
+)
+
+
+; C プログラム解析モード開始
+(defun begin-mtn-Studio ()
+  (interactive)
+  (mtn-set-clang-include-path-main)
+  (flymake-mode t)  
+)
+
 
 ;;; スクロールを一行ずつにする
 (setq scroll-step 1)
@@ -148,9 +189,9 @@
 ;;; スクロールバーを右側に表示する
 (set-scroll-bar-mode 'right)
 
-;;; GDB 関連
+;;; GDB 関連 [begin]
 ;;; 有用なバッファを開くモード
-(setq gdb-many-windows nil)
+(setq gdb-many-windows t)
 
 ;;; 変数の上にマウスカーソルを置くと値を表示
 (add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
@@ -159,7 +200,14 @@
 (setq gdb-use-separate-io-buffer t)
 
 ;;; t にすると mini buffer に値が表示される
-(setq gud-tooltip-echo-area nil)
+(setq gud-tooltip-echo-area t)
+
+;; レジスタの値を見る
+;(gdb-display-registers-buffer)
+
+;; メモリバッファを開く
+;(gdb-display-memory-buffer)
+
 
 ;;; undo-tree
 (require 'undo-tree)
@@ -207,6 +255,7 @@
 (global-set-key [?\C-x f11] 'gud-finish)
 ;; Paste history
 (global-set-key [f12] 'undo-tree-visualize)
+(global-set-key [?\C-x f12] 'mtnDegub)
 
 
 (global-set-key "\C-q" nil)
@@ -214,7 +263,7 @@
 (global-set-key "\C-qa" 'mark-whole-buffer)
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
-(global-set-key "\C-qq" (lambda () (interactive) (other-window -1)))
+(global-set-key "\C-qq" 'begin-mtn-Studio)
 (global-set-key "\C-qo" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
 (global-set-key "\C-qr" 'query-replace)
@@ -226,7 +275,6 @@
 (global-set-key "\C-qd" 'describe-bindings)
 (global-set-key "\C-qs" 'window-resizer)
 (global-set-key "\C-qe" 'toggle-truncate-lines)
-;(global-set-key (kbd "C-q" "C-t") '(lambda () (interactive) (other-window -1))
 
 
 
@@ -368,3 +416,9 @@
 
 (my-ac-config)
 ;; atuto-compete-clang [end]
+
+
+;; flymake [begin]
+; flymake file include
+(require 'flymake)
+;; flymake [end]
