@@ -23,7 +23,7 @@
 )
 
 ; elファイルを読み込むパスを通す
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+;(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install"))
 
 ; dont make auto save file FILENAME~
