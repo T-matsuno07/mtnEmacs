@@ -125,16 +125,37 @@
 ;; yesと入力するのは面倒なのでyで十分
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+
+;; find-grep 次回初期値変数
+(setq myGrepFindDir (substring (shell-command-to-string "pwd") 0 -1) )
+(setq myGrepFindEXT "*.[ch]")
+(setq myGrepFindSTR 'nil)
+
 ; find-grep デフォルト入力指定
 (defun my-grep-find ()
   (interactive)
-   (setq tmp (substring (shell-command-to-string "pwd") 0 -1) )
-   (setq tDIR (read-string "find-grep target Directory: " tmp ))
+   ;(setq tmp (substring (shell-command-to-string "pwd") 0 -1) )
+   (setq tDIR (read-string "find-grep target Directory: " myGrepFindDir ))
+   (setq myGrepFindDir tDIR)
+   (setq tEXT (read-string "find-grep target Extention: " myGrepFindEXT ))
+   (setq myGrepFindEXT tEXT)
    (setq tSTR (read-string "find-grep target String   : "  ))
-   (setq tcmd (read-string "f.g. : " (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '*.[ch]' | xargs grep  -nH '%s'" tDIR tSTR)))
+   (setq myGrepFindSTR tSTR)
+   (setq tcmd (read-string "f.g. : " (format "find %s -type f ! -wholename '*.svn*' ! -wholename '*.git*' -name '%s' | xargs grep  -nIH -i '%s'" tDIR tEXT tSTR)))
 ;   (setq tcmd (read-string "f.g. : " (format "find %s -type f ! -wholename '*.svn*' -name '*.[ch]' | xargs grep  -nH '%s'" tDIR tSTR)))
    (grep-find (format "%s" tcmd))
 )
+
+;;; .emacs.elの末尾に追加
+;; grep実施時に複数のバッファで開けるよう設定
+(defadvice grep (after my-grep activate)                              ;; grep実施後に実行
+  (let ((grep-buffer (get-buffer "*grep*")))                          ;; *grep*バッファをローカル変数に代入
+    (set-buffer grep-buffer)                                          ;; カレントバッファを*grep*バッファに設定
+    (rename-buffer (concat myGrepFindSTR " *find-grep*"  ) t)   ;; バッファ名をリネームする
+  )
+)
+
+
 
 (defun create-ctags ()
   (interactive)
@@ -428,3 +449,5 @@
 ; flymake file include
 (require 'flymake)
 ;; flymake [end]
+
+
