@@ -22,6 +22,9 @@
 
 )
 
+(require 'ls-lisp) 
+(setq ls-lisp-use-insert-directory-program nil) 
+
 ; elファイルを読み込むパスを通す
 ;(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/auto-install"))
