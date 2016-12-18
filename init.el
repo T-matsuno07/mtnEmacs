@@ -298,7 +298,7 @@ With argument, do this that many times."
 (global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
 (global-set-key (kbd "C-S-v") 'yel-yank)
-(global-set-key "\C-w" 'kill-current-word)
+(global-set-key "\C-w" 'select-current-word)
 (global-set-key "\C-i" 'delete-current-word)
 (global-set-key "\C-x\C-x" 'kill-region)
 (global-set-key "\C-z" 'undo)
