@@ -65,6 +65,13 @@
 )
 
 
+;; Ctrl + e 連打で行頭とインデント先頭を往復
+(defun my-move-end-of-line() 
+  (interactive)
+  (if (eolp) (newline-and-indent)  (end-of-line) )
+)
+
+
 (defun yel-yank () 
 "yank to cycle kill ring" (interactive "*") 
 (if (or (eq last-command 'yank-pop) (eq last-command 'yank)) 
@@ -175,6 +182,47 @@
   )
 )
 
+
+; 現在カーソルが当たっているワードを選択状態にする
+(defun select-current-word()
+  (interactive)
+  (backward-word)
+  (set-mark(point))
+  (forward-word)
+)
+
+
+(defun mark-current-line()
+  (interactive)
+  (beginning-of-line)
+  (set-mark(point))
+  (end-of-line)
+)
+
+(defun delete-current-word(arg)
+  "Delete characters forward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (backward-word)
+  (delete-region (point) (progn (forward-word arg) (point)))
+)
+
+(defun kill-current-word(arg)
+  "Kill characters forward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (backward-word)
+  (kill-region (point) (progn (forward-word arg) (point)))
+)
+
+
+(defun backward-my-delete-word (arg)
+  "Delete characters backward until encountering the end of a word.
+With argument, do this that many times."
+  (interactive "p")
+  (delete-word (- arg))
+)
+
 (defun mtn-set-clang-include-path-makefile()
   (interactive)
   (setq ac-clang-cflags
@@ -244,10 +292,14 @@
 ;;; ショートカットWindows化
 (global-set-key "\C-a" 'my-move-begin-of-line)
 (global-set-key "\C-b" 'buffer-menu)
+(global-set-key "\C-e" 'my-move-end-of-line) 
+(global-set-key "\C-f" 'backward-word)
+(global-set-key "\C-l" 'forward-word)
 (global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
 (global-set-key (kbd "C-S-v") 'yel-yank)
-(global-set-key "\C-w" 'delete-window)
+(global-set-key "\C-w" 'select-current-word)
+(global-set-key "\C-i" 'delete-current-word)
 (global-set-key "\C-x\C-x" 'kill-region)
 (global-set-key "\C-z" 'undo)
 (global-set-key [home] 'beginning-of-line)
@@ -282,12 +334,13 @@
 (global-set-key [?\C-x f11] 'gud-finish)
 ;; Paste history
 (global-set-key [f12] 'undo-tree-visualize)
-(global-set-key [?\C-x f12] 'mtnDegub)
+(global-set-key [?\C-x f12] 'delete-my-word)
 
 
 (global-set-key "\C-q" nil)
 (global-set-key "\C-q\C-q" 'view-mode)
 (global-set-key "\C-qa" 'mark-whole-buffer)
+(global-set-key "\C-q\C-a" 'mark-current-line)
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
 (global-set-key "\C-qq" 'begin-mtn-Studio)
