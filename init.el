@@ -108,7 +108,8 @@
                (message "Quit")
                (throw 'end-flag t)))))))
 
-
+; 現在行をハイライト
+;(global-hl-line-mode t)
 
 ; メニューバーを消す
 (menu-bar-mode 0)
@@ -299,7 +300,7 @@ With argument, do this that many times."
 (global-set-key "\C-v" 'yank)
 (global-set-key (kbd "C-S-v") 'yel-yank)
 (global-set-key "\C-w" 'select-current-word)
-(global-set-key "\C-i" 'delete-current-word)
+;(global-set-key "\C-i" 'delete-current-word)
 (global-set-key "\C-x\C-x" 'kill-region)
 (global-set-key "\C-z" 'undo)
 (global-set-key [home] 'beginning-of-line)
@@ -308,6 +309,8 @@ With argument, do this that many times."
 (global-set-key [?\C-x select] 'end-of-buffer)
 (global-set-key "\C-xj" 'goto-line)
 (global-set-key "\C-xn" 'linum-mode)
+;(global-set-key "\C-," 'scroll-up-command)
+;(global-set-key "\C-." 'scroll-down-command)
 (global-set-key "\C-]" 'execute-extended-command)
 
 (global-set-key [f2] 'pop-tag-mark)
@@ -355,6 +358,11 @@ With argument, do this that many times."
 (global-set-key "\C-qd" 'describe-bindings)
 (global-set-key "\C-qs" 'window-resizer)
 (global-set-key "\C-qe" 'toggle-truncate-lines)
+(global-set-key "\C-qp" 'beginning-of-buffer)
+(global-set-key "\C-qn" 'end-of-buffer)
+(global-set-key "\C-qx" 'exchange-point-and-mark)
+(global-set-key "\C-x\C-n" 'scroll-up)
+(global-set-key "\C-x\C-p" 'scroll-down)
 
 
 
