@@ -312,6 +312,7 @@ With argument, do this that many times."
 ;(global-set-key "\C-," 'scroll-up-command)
 ;(global-set-key "\C-." 'scroll-down-command)
 (global-set-key "\C-]" 'execute-extended-command)
+(global-set-key "\C-m" 'newline-and-indent)
 
 (global-set-key [f2] 'pop-tag-mark)
 (global-set-key [?\C-x f2] 'visit-tags-table)
