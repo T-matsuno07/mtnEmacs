@@ -22,8 +22,8 @@
 
 )
 
-(require 'ls-lisp) 
-(setq ls-lisp-use-insert-directory-program nil) 
+(require 'ls-lisp)
+(setq ls-lisp-use-insert-directory-program nil)
 
 ; elファイルを読み込むパスを通す
 ;(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
@@ -59,24 +59,24 @@
 ))
 
 ;; Ctrl + a 連打で行頭とインデント先頭を往復
-(defun my-move-begin-of-line() 
+(defun my-move-begin-of-line()
   (interactive)
   (if (bolp) (back-to-indentation) (beginning-of-line) )
 )
 
 
 ;; Ctrl + e 連打で行頭とインデント先頭を往復
-(defun my-move-end-of-line() 
+(defun my-move-end-of-line()
   (interactive)
   (if (eolp) (newline-and-indent)  (end-of-line) )
 )
 
 
-(defun yel-yank () 
-"yank to cycle kill ring" (interactive "*") 
-(if (or (eq last-command 'yank-pop) (eq last-command 'yank)) 
-(yank-pop 1) 
-(yank 1))) 
+(defun yel-yank ()
+"yank to cycle kill ring" (interactive "*")
+(if (or (eq last-command 'yank-pop) (eq last-command 'yank))
+(yank-pop 1)
+(yank 1)))
 
 
 (defun window-resizer ()
@@ -252,7 +252,7 @@ With argument, do this that many times."
 (defun begin-mtn-Studio ()
   (interactive)
   (mtn-set-clang-include-path-main)
-  (flymake-mode t)  
+  (flymake-mode t)
 )
 
 
@@ -293,7 +293,7 @@ With argument, do this that many times."
 ;;; ショートカットWindows化
 (global-set-key "\C-a" 'my-move-begin-of-line)
 (global-set-key "\C-b" 'buffer-menu)
-(global-set-key "\C-e" 'my-move-end-of-line) 
+(global-set-key "\C-e" 'my-move-end-of-line)
 (global-set-key "\C-f" 'backward-word)
 (global-set-key "\C-l" 'forward-word)
 (global-set-key "\C-o" 'other-window)
@@ -383,7 +383,7 @@ With argument, do this that many times."
 (require 'rainbow-delimiters)
  ;; rainbow-delimiters-mode
  (defun my-rainbow-delimiters-mode-turn-on ()
-   (rainbow-delimiters-mode t))  
+   (rainbow-delimiters-mode t))
  (add-hook 'emacs-lisp-mode-hook 'my-rainbow-delimiters-mode-turn-on)
  (add-hook 'c-mode-common-hook 'my-rainbow-delimiters-mode-turn-on)
 
@@ -412,7 +412,7 @@ With argument, do this that many times."
 
 
 
-;; anything 
+;; anything
 (require 'anything)
 (require 'anything-config)
 (add-to-list 'anything-sources 'anything-c-source-emacs-commands)
@@ -424,7 +424,8 @@ With argument, do this that many times."
 (browse-kill-ring-default-keybindings)
 
 ;(global-set-key (kbd "C-y") 'browse-kill-ring)
-(global-set-key (kbd "C-y") 'anything-show-kill-ring)
+;(global-set-key (kbd "C-y") 'anything-show-kill-ring)
+(global-set-key "\C-qy" 'anything-show-kill-ring)
 
 ;; 履歴保存
 (require 'stash)
@@ -437,7 +438,7 @@ With argument, do this that many times."
 
 ;; gdb モードでのキーバインド 過去のコマンドを呼び出す
 (add-hook 'gdb-mode-hook
-          '(lambda() 
+          '(lambda()
              (local-set-key "\C-p" 'comint-previous-input)
              (local-set-key "\C-n" 'comint-next-input)
            )
@@ -516,26 +517,25 @@ With argument, do this that many times."
 ;; パスを通す
 (add-to-list 'load-path
              (expand-file-name "~/.emacs.d/elpa/yasnippet/"))
- 
+
 ;; 自分用・追加用テンプレート -> mysnippetに作成したテンプレートが格納される
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/.emacs.d/mysnippets"
         "~/.emacs.d/yasnippets"
         ))
- 
+
 ;; 既存スニペットを挿入する
 (define-key yas-minor-mode-map (kbd "C-x i i") 'yas-insert-snippet)
 ;; 新規スニペットを作成するバッファを用意する
 (define-key yas-minor-mode-map (kbd "C-x i n") 'yas-new-snippet)
 ;; 既存スニペットを閲覧・編集する
 (define-key yas-minor-mode-map (kbd "C-x i v") 'yas-visit-snippet-file)
- 
+
 (yas-global-mode 1)
 
-(global-set-key "\C-qy" 'yas-expand)
+;(global-set-key "\C-qy" 'yas-expand)
+(global-set-key "\C-y" 'yas-expand)
 
 ;(keyboard-translate ?\C-i ?\H-i)
 ;(global-set-key [?\H-i] 'yas-expand)
-
-
