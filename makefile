@@ -56,6 +56,7 @@ OUTFILE_ALL_C=$(DEP_DIR)/all_source_list.txt
 # TOPディレクトリ以下に存在する全ての.c拡張子ファイルを検索
 ALL_SOURCE=$(shell find $(TOP_DIR) -type f -name "*.c" 2> /dev/null )
 $(shell echo $(ALL_SOURCE) | sed 's/ /\n/g' > $(OUTFILE_ALL_C))
+#$(shell echo $(ALL_SOURCE) | tr ' ' '\012' > $(OUTFILE_ALL_C))
 # カレントディレクトリ以下に存在する全ての.cファイルを検索
 CURRENT_SOURCE=$(shell find $(PWD) -type f -name "*.c" 2> /dev/null )
 # 全ての.cファイルをmain関数を含む物と含まない物に分ける
@@ -73,6 +74,7 @@ ALL_HEAD_D=$(dir $(ALL_HEAD_F))
 # ディレクトリの重複を削除するため、sort|uniqに投げる
 # sortは行単位でしか行えないため、半角スペースを改行に置換する
 INC_DIR=$(shell echo $(ALL_HEAD_D) | sed 's/ /\n/g'| sort | uniq )
+#INC_DIR=$(shell echo $(ALL_HEAD_D) | tr ' ' '\012' | sort | uniq )
 # インクルードオプションである「-I」を付与
 INC_OPT=$(addprefix -I, $(INC_DIR))
 
