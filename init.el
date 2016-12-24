@@ -299,7 +299,7 @@ With argument, do this that many times."
 (global-set-key "\C-v" 'yank)
 (global-set-key (kbd "C-S-v") 'yel-yank)
 (global-set-key "\C-w" 'select-current-word)
-(global-set-key "\C-i" 'delete-current-word)
+;(global-set-key "\C-i" 'delete-current-word)
 (global-set-key "\C-x\C-x" 'kill-region)
 (global-set-key "\C-z" 'undo)
 (global-set-key [home] 'beginning-of-line)
@@ -502,5 +502,32 @@ With argument, do this that many times."
 ; flymake file include
 (require 'flymake)
 ;; flymake [end]
+
+
+;; yasnippet [begin]
+;; パスを通す
+(add-to-list 'load-path
+             (expand-file-name "~/.emacs.d/elpa/yasnippet/"))
+ 
+;; 自分用・追加用テンプレート -> mysnippetに作成したテンプレートが格納される
+(require 'yasnippet)
+(setq yas-snippet-dirs
+      '("~/.emacs.d/mysnippets"
+        "~/.emacs.d/yasnippets"
+        ))
+ 
+;; 既存スニペットを挿入する
+(define-key yas-minor-mode-map (kbd "C-x i i") 'yas-insert-snippet)
+;; 新規スニペットを作成するバッファを用意する
+(define-key yas-minor-mode-map (kbd "C-x i n") 'yas-new-snippet)
+;; 既存スニペットを閲覧・編集する
+(define-key yas-minor-mode-map (kbd "C-x i v") 'yas-visit-snippet-file)
+ 
+(yas-global-mode 1)
+
+(global-set-key "\C-qy" 'yas-expand)
+
+;(keyboard-translate ?\C-i ?\H-i)
+;(global-set-key [?\H-i] 'yas-expand)
 
 
