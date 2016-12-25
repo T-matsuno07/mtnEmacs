@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: Method_Comment
+# key: mco
+# C言語 メソッドコメント スニペット
+# --
+/*
+ * @name   : $1
+ * @param1 : $2
+ * @param2 : $3
+ * @return : $4
+ * @abst   : $5
+ */
