@@ -192,6 +192,14 @@
   (forward-word)
 )
 
+; 現在のカーソル位置から文末までを選択状態にする
+(defun select-until-line-end()
+  (interactive)
+  (set-mark(point))
+  (end-of-line)
+)
+
+
 
 (defun mark-current-line()
   (interactive)
@@ -461,6 +469,25 @@ With argument, do this that many times."
 (define-key view-mode-map (kbd "<RET>") 'nil)
 (define-key view-mode-map (kbd "<SPC>") 'nil)
 (define-key view-mode-map (kbd "q") 'view-mode)
+(define-key view-mode-map (kbd "u") 'view-mode)
+(define-key view-mode-map (kbd "a") 'beginning-of-buffer)
+(define-key view-mode-map (kbd "e") 'end-of-buffer)
+(define-key view-mode-map (kbd "n") 'scroll-up)
+(define-key view-mode-map (kbd "p") 'scroll-down)
+(define-key view-mode-map (kbd "i") 'previous-line)
+(define-key view-mode-map (kbd "j") 'backward-word)
+(define-key view-mode-map (kbd "l") 'forward-word)
+(define-key view-mode-map (kbd "k") 'next-line)
+(define-key view-mode-map (kbd "o") 'mark-current-line)
+(define-key view-mode-map (kbd "m") 'set-mark)
+(define-key view-mode-map (kbd "c") 'copy-region-as-kill)
+(define-key view-mode-map "\C-k" 'select-until-line-end)
+;  (backward-word) 
+ ; (set-mark(point))
+  ;(forward-word)
+
+
+
 
 
 ;; ファイルなら別バッファで、ディレクトリなら同じバッファで開く
@@ -540,3 +567,17 @@ With argument, do this that many times."
 
 ;(keyboard-translate ?\C-i ?\H-i)
 ;(global-set-key [?\H-i] 'yas-expand)
+
+
+;; ファイル末尾の改行を削除
+;; http://www.emacswiki.org/emacs/DeletingWhitespace
+(defun my-delete-trailing-blank-lines ()
+    "Deletes all blank lines at the end of the file."
+      (interactive)
+        (save-excursion
+              (save-restriction
+                      (widen)
+                            (goto-char (point-max))
+                                  (delete-blank-lines))))
+
+(add-hook 'before-save-hook 'my-delete-trailing-blank-lines)
