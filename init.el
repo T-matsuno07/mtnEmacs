@@ -45,7 +45,7 @@
 
 
 ; diredモードでディレクトリを先に表示
-(setq dired-listing-switches "-alL --group-directories-first")
+(setq dired-listing-switches "-lXh")
 
 (setq-default c-basic-offset 2     ;;基本インデント量4
    tab-width 2          ;;タブ幅4
@@ -350,26 +350,29 @@ With argument, do this that many times."
 
 
 (global-set-key "\C-q" nil)
-(global-set-key "\C-q\C-q" 'view-mode)
+(global-set-key "\C-q\C-q" 'nil)
 (global-set-key "\C-qa" 'mark-whole-buffer)
 (global-set-key "\C-q\C-a" 'mark-current-line)
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
 (global-set-key "\C-qq" 'begin-mtn-Studio)
-(global-set-key "\C-qo" (lambda () (interactive) (other-window -1)))
+(global-set-key "\C-q\C-o" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
-(global-set-key "\C-qr" 'query-replace)
-(global-set-key "\C-qt" 'find-tag)
-(global-set-key "\C-qb" 'pop-tag-mark)
+(global-set-key "\C-q\C-r" 'query-replace)
+(global-set-key "\C-q\C-t" 'find-tag)
+(global-set-key "\C-q\C-b" 'pop-tag-mark)
 (global-set-key "\C-qg" 'grep)
-(global-set-key "\C-qi" 'open-config-file)
+(global-set-key "\C-q\C-i" 'open-config-file)
 (global-set-key "\C-qh" 'open-myhelp-file)
 (global-set-key "\C-qd" 'describe-bindings)
-(global-set-key "\C-qs" 'window-resizer)
-(global-set-key "\C-qe" 'toggle-truncate-lines)
-(global-set-key "\C-qp" 'beginning-of-buffer)
-(global-set-key "\C-qn" 'end-of-buffer)
-(global-set-key "\C-qx" 'exchange-point-and-mark)
+(global-set-key "\C-q\C-l" 'align-regrep)
+(global-set-key "\C-q\C-k" 'yas-describe-tables)
+(global-set-key "\C-q\C-s" 'window-resizer)
+(global-set-key "\C-q\C-e" 'toggle-truncate-lines)
+(global-set-key "\C-q\C-p" 'beginning-of-buffer)
+(global-set-key "\C-q\C-n" 'end-of-buffer)
+(global-set-key "\C-q\C-v" 'view-mode)
+(global-set-key "\C-q\C-x" 'exchange-point-and-mark)
 (global-set-key "\C-x\C-n" 'scroll-up)
 (global-set-key "\C-x\C-p" 'scroll-down)
 
