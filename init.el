@@ -573,12 +573,19 @@ With argument, do this that many times."
 ;; http://www.emacswiki.org/emacs/DeletingWhitespace
 (defun my-delete-trailing-blank-lines ()
     "Deletes all blank lines at the end of the file."
-      (interactive)
-        (save-excursion
-              (save-restriction
-                      (widen)
-                            (goto-char (point-max))
-                                  (delete-blank-lines))))
+  (interactive)
+  (save-excursion
+   (save-restriction
+   (widen)
+   (goto-char (point-max))
+   (delete-blank-lines))
+  )
+  (save-excursion  
+   (save-restriction
+   (goto-char (point-max))
+   (newline))
+  )
+)
 
 (add-hook 'before-save-hook 'my-delete-trailing-blank-lines)
 
@@ -621,3 +628,4 @@ With argument, do this that many times."
 	       )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
+

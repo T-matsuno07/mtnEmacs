@@ -16,8 +16,6 @@
   <dd>切り取り</dd>  
 <dt>Ctrl + V</dt>
  <dd>貼り付け</dd>  
-<dt>Ctrl + Y</dt>
- <dd>コピー履歴一覧から貼り付け</dd>  
 </dl>
 
 ## 基本キーバインド
@@ -44,6 +42,8 @@
  <dd>貼り付け</dd>
 <dt>Ctrl + Shift + V</dt>
  <dd>クリップボード履歴貼り付け</dd>  
+<dt>Ctrl + Y</dt>
+ <dd>スニペット機能呼び出し</dd>    
 <dt>Ctrl + W</dt>
  <dd>選択中のワードを選択</dd>  
 <dt>Ctrl + Z</dt>
@@ -105,13 +105,14 @@ Ctrl + Qに続けて以下のコマンドを入力することでコマンドを
       <dd>折り返し ON/OFF 切り替え</dd>  
 <dt>Ctrl + Q > O</dt>
   <dd>別ウィンドウ (Ctrl + Oとは逆回り)</dd>  
-
 <dt>Ctrl + Q > Ctrl + C</dt>
  <dd>コピー</dd>  
 <dt>Ctrl + Q > Q</dt>
  <dd>C言語解析モード開始(mtnStudio機能起動)</dd>  
 <dt>Ctrl + Q > O</dt>
  <dd>別ウィンドウ( Ctrl + Oとは逆順に選択する)</dd>  
+<dt>Ctrl + Q > Ctrl + Y</dt>
+  <dd>コピー履歴一覧から貼り付け</dd>  
 <dt>Ctrl + Q > T</dt>
     <dd>タグジャンプ(関数定義箇所を開く)</dd>  
 <dt>Ctrl + Q > Ctrl + T</dt>
@@ -125,6 +126,37 @@ Ctrl + Qに続けて以下のコマンドを入力することでコマンドを
 <dt>Ctrl + Q > G</dt>
  <dd>grep</dd>
 </dl>
+
+## Viewモード(編集禁止モード)
+<dl>
+<dt>Q or U</dt>  
+ <dd>Viewモード終了</dd>  
+<dt>A</dt>  
+ <dd>バッファの先頭へ移動</dd>  
+<dt>E</dt>  
+ <dd>バッファの終端へ移動</dd>  
+<dt>N</dt>  
+ <dd>1ページ分下へ進む</dd>  
+<dt>P</dt>  
+ <dd>1ページ分上へ進む</dd>  
+<dt>I</dt>  
+<dd>一行上へ移動</dd>  
+<dt>K</dt>  
+<dd>一行下へ移動</dd>  
+<dt>J</dt>  
+<dd>1文字列分左へ移動</dd>  
+<dt>L</dt>  
+<dd>1文字列分右へ移動</dd>  
+<dt>O</dt>  
+<dd>現在の行全体を選択</dd>  
+<dt>M</dt>  
+<dd>現在の位置をマーク</dd>  
+<dt>C</dt>  
+<dd>コピー</dd>  
+<dt>Ctrl + K</dt>  
+<dd>現在のカーソルの位置から行末までを選択</dd>  
+</dl>
+
 
 ## ヘルプコマンド
 Emacsの使い方を表示するヘルプコマンド。  
