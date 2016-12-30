@@ -272,7 +272,7 @@ With argument, do this that many times."
 
 ;;; GDB 関連 [begin]
 ;;; 有用なバッファを開くモード
-(setq gdb-many-windows t)
+;(setq gdb-many-windows t)
 
 ;;; 変数の上にマウスカーソルを置くと値を表示
 (add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
@@ -482,7 +482,7 @@ With argument, do this that many times."
 (define-key view-mode-map (kbd "m") 'set-mark)
 (define-key view-mode-map (kbd "c") 'copy-region-as-kill)
 (define-key view-mode-map "\C-k" 'select-until-line-end)
-;  (backward-word) 
+;  (backward-word)
  ; (set-mark(point))
   ;(forward-word)
 
@@ -588,4 +588,44 @@ With argument, do this that many times."
 )
 
 (add-hook 'before-save-hook 'my-delete-trailing-blank-lines)
+
+
+;; 以下が Mac 用のフォント設定
+(when (memq window-system '(mac ns))
+  (global-set-key [s-mouse-1] 'browse-url-at-mouse)
+  (let* ((size 14)
+	 (jpfont "Hiragino Maru Gothic ProN")
+   (asciifont "Monaco")
+	 (h (* size 10)))
+    (set-face-attribute 'default nil :family asciifont :height h)
+    (set-fontset-font t 'katakana-jisx0201 jpfont)
+    (set-fontset-font t 'japanese-jisx0208 jpfont)
+    (set-fontset-font t 'japanese-jisx0212 jpfont)
+    (set-fontset-font t 'japanese-jisx0213-1 jpfont)
+    (set-fontset-font t 'japanese-jisx0213-2 jpfont)
+    (set-fontset-font t '(#x0080 . #x024F) asciifont))
+  (setq face-font-rescale-alist
+	'(("^-apple-hiragino.*" . 1.2)
+	  (".*-Hiragino Maru Gothic ProN-.*" . 1.2)
+	  (".*osaka-bold.*" . 1.2)
+	  (".*osaka-medium.*" . 1.2)
+	  (".*courier-bold-.*-mac-roman" . 1.0)
+	  (".*monaco cy-bold-.*-mac-cyrillic" . 0.9)
+	  (".*monaco-bold-.*-mac-roman" . 0.9)
+	  ("-cdac$" . 1.3)))
+  ;; C-x 5 2 で新しいフレームを作ったときに同じフォントを使う
+  (setq frame-inherited-parameters '(font tool-bar-lines))
+)
+
+
+;; 起動時のサイズ,表示位置,フォントを指定
+(setq initial-frame-alist
+      (append (list
+	       '(width . 150)
+	       '(height . 45)
+	       '(top . 0)
+	       '(left . 0)
+	       )
+	      initial-frame-alist))
+(setq default-frame-alist initial-frame-alist)
 
