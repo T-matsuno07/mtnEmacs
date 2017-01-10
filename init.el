@@ -437,7 +437,7 @@ With argument, do this that many times."
 
 ;(global-set-key (kbd "C-y") 'browse-kill-ring)
 ;(global-set-key (kbd "C-y") 'anything-show-kill-ring)
-(global-set-key "\C-qy" 'anything-show-kill-ring)
+(global-set-key "\C-q\C-y" 'anything-show-kill-ring)
 
 ;; 履歴保存
 (require 'stash)
@@ -583,7 +583,7 @@ With argument, do this that many times."
    (goto-char (point-max))
    (delete-blank-lines))
   )
-  (save-excursion  
+  (save-excursion
    (save-restriction
    (goto-char (point-max))
    (newline))
@@ -631,4 +631,3 @@ With argument, do this that many times."
 	       )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
-
