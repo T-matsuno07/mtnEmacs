@@ -43,6 +43,8 @@
 ; 極力UTF-8とする
 (prefer-coding-system 'utf-8)
 
+;; マルチウィンドウ制御用 
+(require 'rotate)
 
 ; diredモードでディレクトリを先に表示
 (setq dired-listing-switches "-lXh")
@@ -373,6 +375,16 @@ With argument, do this that many times."
 (global-set-key "\C-q\C-n" 'end-of-buffer)
 (global-set-key "\C-q\C-v" 'view-mode)
 (global-set-key "\C-q\C-x" 'exchange-point-and-mark)
+(global-set-key "\C-q\C-w" 'rotate-window)
+
+(global-set-key "\C-q1" 'rotate-window)
+(global-set-key "\C-q2" 'rotate:main-vertical)
+(global-set-key "\C-q3" 'rotate:main-horizontal)
+(global-set-key "\C-q4" 'rotate:even-vertical)
+(global-set-key "\C-q5" 'rotate:even-horizontal)
+(global-set-key "\C-q6" 'rotate:tiled)
+(global-set-key "\C-q0" 'rotate-layout)
+
 (global-set-key "\C-x\C-n" 'scroll-up)
 (global-set-key "\C-x\C-p" 'scroll-down)
 
@@ -631,3 +643,4 @@ With argument, do this that many times."
 	       )
 	      initial-frame-alist))
 (setq default-frame-alist initial-frame-alist)
+
