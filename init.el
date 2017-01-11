@@ -358,7 +358,7 @@ With argument, do this that many times."
 (global-set-key "\C-q\C-c" 'copy-region-as-kill)
 (global-set-key "\C-qc" 'copy-region-as-kill)
 (global-set-key "\C-qq" 'begin-mtn-Studio)
-(global-set-key "\C-q\C-o" (lambda () (interactive) (other-window -1)))
+;(global-set-key "\C-q\C-o" (lambda () (interactive) (other-window -1)))
 (global-set-key "\C-q\C-t" 'find-tag-other-window)
 (global-set-key "\C-q\C-r" 'query-replace)
 (global-set-key "\C-q\C-t" 'find-tag)
@@ -384,7 +384,7 @@ With argument, do this that many times."
 (global-set-key "\C-q5" 'rotate:even-horizontal)
 (global-set-key "\C-q6" 'rotate:tiled)
 (global-set-key "\C-q0" 'rotate-layout)
-
+(global-set-key "\C-q\C-o" 'rotate-window)
 (global-set-key "\C-x\C-n" 'scroll-up)
 (global-set-key "\C-x\C-p" 'scroll-down)
 
