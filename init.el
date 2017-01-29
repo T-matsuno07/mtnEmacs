@@ -338,14 +338,14 @@ With argument, do this that many times."
 (global-set-key [f7] 'occur)
 ;; grep
 (global-set-key [f8] 'my-grep-find)
-;; GDB, go to selected line
-(global-set-key [f9] 'gud-jump)
 ;; GDB, one line do. not call function
-(global-set-key [f10] 'gud-next)
+(global-set-key [f9] 'gud-next)
+;; GDB, go to selected line
+(global-set-key [?\C-x f9] 'gud-jump)
 ;; GDB, one line do. jump into function
-(global-set-key [f11] 'gud-step)
+(global-set-key [f10] 'gud-step)
 ;; GDB, do until end of current function
-(global-set-key [?\C-x f11] 'gud-finish)
+(global-set-key [?\C-x f10] 'gud-finish)
 ;; Paste history
 (global-set-key [f12] 'undo-tree-visualize)
 (global-set-key [?\C-x f12] 'delete-my-word)
