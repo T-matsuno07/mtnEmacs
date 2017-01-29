@@ -43,7 +43,7 @@
 ; 極力UTF-8とする
 (prefer-coding-system 'utf-8)
 
-;; マルチウィンドウ制御用 
+;; マルチウィンドウ制御用
 (require 'rotate)
 
 ; diredモードでディレクトリを先に表示
@@ -274,13 +274,13 @@ With argument, do this that many times."
 
 ;;; GDB 関連 [begin]
 ;;; 有用なバッファを開くモード
-;(setq gdb-many-windows t)
+(setq gdb-many-windows t)
 
 ;;; 変数の上にマウスカーソルを置くと値を表示
 (add-hook 'gdb-mode-hook '(lambda () (gud-tooltip-mode t)))
 
 ;;; I/O バッファを表示
-(setq gdb-use-separate-io-buffer t)
+(setq gdb-use-separate-io-buffer nil)
 
 ;;; t にすると mini buffer に値が表示される
 (setq gud-tooltip-echo-area t)
@@ -305,7 +305,7 @@ With argument, do this that many times."
 (global-set-key "\C-b" 'buffer-menu)
 (global-set-key "\C-e" 'my-move-end-of-line)
 (global-set-key "\C-f" 'backward-word)
-(global-set-key "\C-l" 'forward-word)
+;(global-set-key "\C-l" 'forward-word)
 (global-set-key "\C-o" 'other-window)
 (global-set-key "\C-v" 'yank)
 (global-set-key (kbd "C-S-v") 'yel-yank)
@@ -323,6 +323,8 @@ With argument, do this that many times."
 ;(global-set-key "\C-." 'scroll-down-command)
 (global-set-key "\C-]" 'execute-extended-command)
 (global-set-key "\C-m" 'newline-and-indent)
+
+(global-set-key "\C-l" 'rotate-window)
 
 (global-set-key [f2] 'pop-tag-mark)
 (global-set-key [?\C-x f2] 'visit-tags-table)
@@ -376,6 +378,14 @@ With argument, do this that many times."
 (global-set-key "\C-q\C-v" 'view-mode)
 (global-set-key "\C-q\C-x" 'exchange-point-and-mark)
 (global-set-key "\C-q\C-w" 'rotate-window)
+
+(global-set-key "\C-q\C-qq" 'gdb-display-gdb-buffer)
+(global-set-key "\C-q\C-q\C-m" 'gdb-display-memory-buffer)
+(global-set-key "\C-q\C-q\C-l" 'gdb-display-locals-buffer)
+(global-set-key "\C-q\C-q\C-b" 'gdb-display-breakpoints-buffer)
+(global-set-key "\C-q\C-q\C-i" 'gdb-display-io-buffer)
+(global-set-key "\C-q\C-q\C-s" 'gdb-display-stack-buffer)
+(global-set-key "\C-q\C-q\C-r" 'gdb-display-registers-buffer)
 
 (global-set-key "\C-q1" 'rotate-window)
 (global-set-key "\C-q2" 'rotate:main-vertical)
